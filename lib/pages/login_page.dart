@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:uap/components/my_button.dart';
 import 'package:uap/components/my_textfield.dart';
 
@@ -22,7 +20,7 @@ class LoginPage extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               //logo
@@ -40,7 +38,7 @@ class LoginPage extends StatelessWidget {
               //size: 100,
               // ),
 
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
 
@@ -53,7 +51,7 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
 
-              SizedBox(
+              const SizedBox(
                 height: 25,
               ),
 
@@ -64,7 +62,7 @@ class LoginPage extends StatelessWidget {
                 obscureText: false,
               ),
 
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
 
@@ -75,7 +73,7 @@ class LoginPage extends StatelessWidget {
                 obscureText: true,
               ),
 
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
 
@@ -93,12 +91,12 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
 
-              SizedBox(
+              const SizedBox(
                 height: 25,
               ),
 
               //sing in button
-              MyButton(
+              const MyButton(
                   //onTap: signUserIn,
                   )
             ],

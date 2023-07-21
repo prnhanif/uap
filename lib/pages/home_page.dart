@@ -27,11 +27,11 @@ class _HomeState extends State<Home> {
           Padding(
               padding: const EdgeInsets.only(right: 25.0),
               child: GestureDetector(
-                child: Icon(Icons.person),
+                child: const Icon(Icons.person),
                 onTap: () {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => akun()),
+                    MaterialPageRoute(builder: (context) => const akun()),
                   );
                 },
               ))
@@ -49,8 +49,8 @@ class _HomeState extends State<Home> {
                   MaterialPageRoute(builder: (context) => LoginPage()),
                 );
               },
-              leading: Icon(Icons.logout),
-              title: Text("Log Out"),
+              leading: const Icon(Icons.logout),
+              title: const Text("Log Out"),
             )
           ],
         ),
@@ -63,23 +63,23 @@ class _HomeState extends State<Home> {
               //pergi ke home
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Home()),
+                MaterialPageRoute(builder: (context) => const Home()),
               );
             } else if (value == 1) {
               //pergi ke notifikasi
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => notifikasi()),
+                MaterialPageRoute(builder: (context) => const notifikasi()),
               );
             } else if (value == 2) {
               //pergi ke library
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => librari()),
+                MaterialPageRoute(builder: (context) => const librari()),
               );
             }
           },
-          items: [
+          items: const [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
             BottomNavigationBarItem(
                 icon: Icon(Icons.notifications), label: "Notifikasi"),
@@ -95,7 +95,7 @@ class _HomeState extends State<Home> {
               style: GoogleFonts.bebasNeue(fontSize: 56, color: Colors.white)),
         ),
 
-        SizedBox(
+        const SizedBox(
           height: 25,
         ),
 
@@ -104,7 +104,7 @@ class _HomeState extends State<Home> {
           padding: const EdgeInsets.symmetric(horizontal: 25.0),
           child: TextField(
             decoration: InputDecoration(
-              prefixIcon: Icon(Icons.search),
+              prefixIcon: const Icon(Icons.search),
               hintText: "Temukan game mu...",
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.grey.shade600),
@@ -116,7 +116,7 @@ class _HomeState extends State<Home> {
           ),
         ),
 
-        SizedBox(
+        const SizedBox(
           height: 25,
         ),
 
@@ -126,7 +126,7 @@ class _HomeState extends State<Home> {
           scrollDirection: Axis.horizontal,
           children: [
             Padding(
-              padding: EdgeInsets.only(left: 25.0, bottom: 25),
+              padding: const EdgeInsets.only(left: 25.0, bottom: 25),
               child: Container(
                 width: 200,
                 decoration: BoxDecoration(
@@ -135,14 +135,14 @@ class _HomeState extends State<Home> {
                 child: GestureDetector(
                   onTap: () {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => tekken7()));
+                        MaterialPageRoute(builder: (context) => const tekken7()));
                   },
                   child: Image.asset("lib/images/tekken7.png"),
                 ),
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(left: 25.0, bottom: 25),
+              padding: const EdgeInsets.only(left: 25.0, bottom: 25),
               child: Container(
                 width: 200,
                 decoration: BoxDecoration(
@@ -151,14 +151,14 @@ class _HomeState extends State<Home> {
                 child: GestureDetector(
                   onTap: () {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => rdr1()));
+                        MaterialPageRoute(builder: (context) => const rdr1()));
                   },
                   child: Image.asset("lib/images/rdr cv1.png"),
                 ),
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(left: 25.0, bottom: 25),
+              padding: const EdgeInsets.only(left: 25.0, bottom: 25),
               child: Container(
                 width: 200,
                 decoration: BoxDecoration(
@@ -167,7 +167,7 @@ class _HomeState extends State<Home> {
                 child: GestureDetector(
                   onTap: () {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => yakuza0()));
+                        MaterialPageRoute(builder: (context) => const yakuza0()));
                   },
                   child: Image.asset("lib/images/yakuza0.png"),
                 ),

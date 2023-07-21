@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class MyTextField extends StatelessWidget {
   final controller;
@@ -16,7 +14,7 @@ class MyTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 25.0),
+      padding: const EdgeInsets.symmetric(horizontal: 25.0),
       child: TextField(
         controller: controller,
         obscureText: obscureText,
@@ -29,7 +27,7 @@ class MyTextField extends StatelessWidget {
             fillColor: Colors.grey.shade400,
             filled: true,
             hintText: hintText,
-            hintStyle: TextStyle(color: Colors.white)),
+            hintStyle: const TextStyle(color: Colors.white)),
       ),
     );
   }

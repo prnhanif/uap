@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class librari extends StatelessWidget {
@@ -13,9 +11,9 @@ class librari extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
-        actions: [
+        actions: const [
           Padding(
-            padding: const EdgeInsets.only(right: 25.0),
+            padding: EdgeInsets.only(right: 25.0),
           )
         ],
       ),
@@ -27,13 +25,13 @@ class librari extends StatelessWidget {
               style: GoogleFonts.bebasNeue(fontSize: 56, color: Colors.white)),
         ),
 
-        SizedBox(
+        const SizedBox(
           height: 25,
         ),
 
         // search bar
 
-        SizedBox(
+        const SizedBox(
           height: 25,
         ),
 
