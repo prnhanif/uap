@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class akun extends StatelessWidget {
-  const akun({super.key});
+class cart extends StatelessWidget {
+  const cart({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class akun extends StatelessWidget {
       body: Column(children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25.0),
-          child: Text("Akun",
+          child: Text("Cart",
               style: GoogleFonts.bebasNeue(fontSize: 56, color: Colors.white)),
         ),
 

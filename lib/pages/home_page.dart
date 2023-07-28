@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:uap/pages/akun_page.dart';
+import 'package:uap/pages/cart_page.dart';
 import 'package:uap/pages/library_page.dart';
 import 'package:uap/pages/login_page.dart';
 import 'package:uap/pages/notifikasi_page.dart';
@@ -27,11 +27,11 @@ class _HomeState extends State<Home> {
           Padding(
               padding: const EdgeInsets.only(right: 25.0),
               child: GestureDetector(
-                child: const Icon(Icons.person),
+                child: const Icon(Icons.shop),
                 onTap: () {
-                  Navigator.pushReplacement(
+                  Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const akun()),
+                    MaterialPageRoute(builder: (context) => const cart()),
                   );
                 },
               ))
@@ -134,8 +134,10 @@ class _HomeState extends State<Home> {
                     borderRadius: BorderRadius.circular(12)),
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => const tekken7()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const tekken7()));
                   },
                   child: Image.asset("lib/images/tekken7.png"),
                 ),
@@ -166,8 +168,10 @@ class _HomeState extends State<Home> {
                     borderRadius: BorderRadius.circular(12)),
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => const yakuza0()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const yakuza0()));
                   },
                   child: Image.asset("lib/images/yakuza0.png"),
                 ),
