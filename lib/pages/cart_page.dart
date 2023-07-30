@@ -1,8 +1,11 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class cart extends StatelessWidget {
-  const cart({super.key});
+  cart({super.key});
+  var dataJson;
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +31,6 @@ class cart extends StatelessWidget {
         const SizedBox(
           height: 25,
         ),
-
-        // search bar
 
         const SizedBox(
           height: 25,

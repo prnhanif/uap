@@ -1,17 +1,55 @@
+import 'dart:convert';
+import 'package:uap/pages/cart_page.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
-class rdr1 extends StatelessWidget {
-  const rdr1({super.key});
+class rdr1 extends StatefulWidget {
+  rdr1({super.key});
+
+  @override
+  State<rdr1> createState() => _rdr1State();
+}
+
+class _rdr1State extends State<rdr1> {
+  int total = 0;
+
+  //strapi
+  var dataJson;
+
+  void _getDataFromStrapi() async {
+    var response = await http.get(Uri.parse("http://localhost:1337/api/games"));
+    dataJson = jsonDecode(response.body);
+    print(dataJson["meta"]["pagination"]["total"]);
+    setState(() {
+      total = dataJson["meta"]["pagination"]["total"];
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    _getDataFromStrapi();
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.black87,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
-          titleTextStyle: TextStyle(
+
+          //cart
+          actions: [
+            Padding(
+                padding: const EdgeInsets.only(right: 25.0),
+                child: GestureDetector(
+                  child: const Icon(Icons.shop),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => cart()),
+                    );
+                  },
+                ))
+          ],
+          titleTextStyle: const TextStyle(
             color: Colors.black,
             fontSize: 24,
             fontWeight: FontWeight.w500,
@@ -25,12 +63,12 @@ class rdr1 extends StatelessWidget {
               width: 300,
               height: 300,
             ),
-            SizedBox(height: 40),
+            const SizedBox(height: 40),
             Expanded(
                 child: Container(
                     width: double.infinity,
-                    padding: EdgeInsets.all(16),
-                    decoration: BoxDecoration(
+                    padding: const EdgeInsets.all(16),
+                    decoration: const BoxDecoration(
                         color: Colors.black,
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(40),
@@ -43,7 +81,7 @@ class rdr1 extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              Expanded(
+                              const Expanded(
                                   child: Text(
                                 "Red Dead Redemption 1",
                                 style: TextStyle(
@@ -51,18 +89,18 @@ class rdr1 extends StatelessWidget {
                                   fontWeight: FontWeight.bold,
                                 ),
                               )),
-                              SizedBox(
+                              const SizedBox(
                                 width: 30,
                               ),
                               Container(
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                   horizontal: 16,
                                   vertical: 16,
                                 ),
                                 decoration: BoxDecoration(
                                     color: Colors.green,
                                     borderRadius: BorderRadius.circular(8)),
-                                child: Text(
+                                child: const Text(
                                   "600k",
                                   style: TextStyle(
                                     fontSize: 20,
@@ -73,8 +111,8 @@ class rdr1 extends StatelessWidget {
                               )
                             ],
                           ),
-                          SizedBox(height: 20),
-                          Text(
+                          const SizedBox(height: 20),
+                          const Text(
                             "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout",
                             textAlign: TextAlign.start,
                             style: TextStyle(
@@ -87,10 +125,12 @@ class rdr1 extends StatelessWidget {
                     )))
           ],
         )),
+
+        //bottom navigasi
         bottomNavigationBar: Container(
           height: 150,
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          decoration: BoxDecoration(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          decoration: const BoxDecoration(
               color: Colors.white,
               boxShadow: [
                 BoxShadow(
@@ -101,19 +141,20 @@ class rdr1 extends StatelessWidget {
           child: Row(
             children: [
               Expanded(
+                  //button
                   child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: _getDataFromStrapi,
                       style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all(
                             Colors.black87,
                           ),
                           fixedSize: MaterialStateProperty.all(
-                            Size(double.infinity, 50),
+                            const Size(double.infinity, 50),
                           ),
                           shape: MaterialStateProperty.all(
                               RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(18)))),
-                      child: Text(
+                      child: const Text(
                         "Tambah",
                         style: TextStyle(fontSize: 20),
                       )))

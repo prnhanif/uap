@@ -23,6 +23,7 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
+        //cart
         actions: [
           Padding(
               padding: const EdgeInsets.only(right: 25.0),
@@ -31,7 +32,7 @@ class _HomeState extends State<Home> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const cart()),
+                    MaterialPageRoute(builder: (context) => cart()),
                   );
                 },
               ))
@@ -153,7 +154,7 @@ class _HomeState extends State<Home> {
                 child: GestureDetector(
                   onTap: () {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => const rdr1()));
+                        MaterialPageRoute(builder: (context) => rdr1()));
                   },
                   child: Image.asset("lib/images/rdr cv1.png"),
                 ),
