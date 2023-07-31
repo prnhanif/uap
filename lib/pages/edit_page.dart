@@ -8,9 +8,11 @@ class EditPage extends StatefulWidget {
     super.key,
     required this.nama_game,
     required this.harga,
+    required this.id,
   });
   final String nama_game;
   final String harga;
+  final int id;
 
   @override
   State<EditPage> createState() => _EditPageState();
@@ -58,7 +60,7 @@ class _EditPageState extends State<EditPage> {
                   'Accept': 'application/json'
                 };
                 var response = await http.put(
-                    Uri.parse("http://localhost:1337/api/games/"),
+                    Uri.parse("http://localhost:1337/api/games/${widget.id}"),
                     headers: headers,
                     body: jsonEncode({
                       "data": {
