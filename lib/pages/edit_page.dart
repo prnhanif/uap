@@ -1,17 +1,32 @@
-import 'package:flutter/material.dart';
 import 'dart:convert';
+
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class CreatePage extends StatefulWidget {
-  const CreatePage({super.key});
+class EditPage extends StatefulWidget {
+  const EditPage({
+    super.key,
+    required this.nama_game,
+    required this.harga,
+  });
+  final String nama_game;
+  final String harga;
 
   @override
-  State<CreatePage> createState() => _CreatePageState();
+  State<EditPage> createState() => _EditPageState();
 }
 
-class _CreatePageState extends State<CreatePage> {
+class _EditPageState extends State<EditPage> {
   final namaController = TextEditingController();
   final hargaController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    namaController.text = widget.nama_game;
+    hargaController.text = widget.harga;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +34,7 @@ class _CreatePageState extends State<CreatePage> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
-        title: const Text("Tambah Game"),
+        title: const Text("Edit Game"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(14.0),
@@ -42,8 +57,8 @@ class _CreatePageState extends State<CreatePage> {
                   'Content-Type': 'application/json',
                   'Accept': 'application/json'
                 };
-                var response = await http.post(
-                    Uri.parse("http://localhost:1337/api/games"),
+                var response = await http.put(
+                    Uri.parse("http://localhost:1337/api/games/"),
                     headers: headers,
                     body: jsonEncode({
                       "data": {
