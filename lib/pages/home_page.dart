@@ -1,42 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:uap/game_model.dart';
-import 'package:uap/network_manager.dart';
 import 'package:uap/pages/cart_page.dart';
-import 'package:uap/pages/library_page.dart';
 import 'package:uap/pages/login_page.dart';
 import 'package:uap/pages/notifikasi_page.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:uap/pages/rdr1_page.dart';
 import 'package:uap/pages/tekken7_page.dart';
 import 'package:uap/pages/yakuza0_page.dart';
 
 class Home extends StatefulWidget {
-  const Home({super.key});
+  const Home({Key? key}) : super(key: key);
 
   @override
   State<Home> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
-  List<Game> games = [];
-
-  bool isLoading = false;
-
-  Future<void> refreshData() async {
-    setState(() {
-      isLoading = true;
-    });
-    final result = await NetworkManager().getAll();
-    games = result.data;
-    setState(() {
-      isLoading = false;
-    });
-  }
+  int _counter = 0;
+  int total = 0;
+  var dataJson;
 
   @override
   void initState() {
     super.initState();
-    refreshData();
+    _getDataFromStrapi(); // Panggil fungsi untuk memuat data saat widget di-load
+  }
+
+  void _getDataFromStrapi() async {
+    var response = await http.get(Uri.parse("http://localhost:1337/api/games"));
+    setState(() {
+      dataJson = jsonDecode(response.body);
+      total = dataJson["meta"]["pagination"]["total"];
+    });
   }
 
   @override
@@ -55,7 +51,7 @@ class _HomeState extends State<Home> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const cart()),
+                    MaterialPageRoute(builder: (context) => cart()),
                   );
                 },
               ))
@@ -95,71 +91,81 @@ class _HomeState extends State<Home> {
                 context,
                 MaterialPageRoute(builder: (context) => const notifikasi()),
               );
-            } else if (value == 2) {
-              //pergi ke library
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const librari()),
-              );
             }
           },
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
             BottomNavigationBarItem(
                 icon: Icon(Icons.notifications), label: "Notifikasi"),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.library_add), label: "Library"),
           ]),
 
-      // Temukan game favorit mu
-      body: Column(children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25.0),
-          child: Text("Temukan game terbaik mu",
-              style: GoogleFonts.bebasNeue(fontSize: 56, color: Colors.white)),
-        ),
-
-        const SizedBox(
-          height: 25,
-        ),
-
-        // search bar
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25.0),
-          child: TextField(
-            decoration: InputDecoration(
-              prefixIcon: const Icon(Icons.search),
-              hintText: "Temukan game mu...",
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey.shade600),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey.shade600),
-              ),
+      // Daftar Game
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              "Daftar Game",
+              style: GoogleFonts.bebasNeue(fontSize: 56, color: Colors.white),
             ),
           ),
-        ),
-
-        const SizedBox(
-          height: 25,
-        ),
-
-        //horizontal list view (menu game)
-        Expanded(
-          child: ListView.builder(
-            itemCount: games.length,
-            physics: const ScrollPhysics(),
-            itemBuilder: (BuildContext context, int index) {
-              return Card(
-                child: ListTile(
-                  title: Text(games[index].attributes.namaGame),
-                  subtitle: Text(games[index].attributes.harga),
-                ),
-              );
-            },
+          Image.asset(
+            "lib/images/rdr bg1.png",
+            height: 200,
+            width: MediaQuery.of(context).size.width,
+            fit: BoxFit.cover,
           ),
-        )
-      ]),
+          Expanded(
+            child: ListView.builder(
+              itemCount: total,
+              itemBuilder: (context, index) {
+                String nama_game =
+                    dataJson["data"][index]["attributes"]["nama_game"];
+                return ListTile(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => rdr1(
+                                  nama_game: nama_game,
+                                )));
+                  },
+                  title: Text(nama_game),
+                  subtitle: Row(
+                    children: [
+                      Text(
+                        "Harga: ",
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                      Text(
+                        dataJson["data"][index]["attributes"]["harga"],
+                        style: TextStyle(color: Colors.green),
+                      ),
+                    ],
+                  ),
+                  leading: Icon(Icons.gamepad),
+                  trailing: IconButton(
+                    onPressed: () async {
+                      var id = dataJson["data"][index]["id"];
+                      var response = await http.delete(
+                        Uri.parse("http://localhost:1337/api/games/$id"),
+                      );
+                      _getDataFromStrapi();
+                    },
+                    icon: Icon(Icons.delete),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _getDataFromStrapi,
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }
