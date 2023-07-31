@@ -5,9 +5,8 @@ import 'package:uap/pages/login_page.dart';
 import 'package:uap/pages/notifikasi_page.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:uap/pages/rdr1_page.dart';
-import 'package:uap/pages/tekken7_page.dart';
-import 'package:uap/pages/yakuza0_page.dart';
+import 'package:uap/pages/edit_page.dart';
+import 'package:uap/pages/create_page.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -17,7 +16,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  int _counter = 0;
+  final int _counter = 0;
   int total = 0;
   var dataJson;
 
@@ -51,7 +50,7 @@ class _HomeState extends State<Home> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => cart()),
+                    MaterialPageRoute(builder: (context) => const cart()),
                   );
                 },
               ))
@@ -120,31 +119,35 @@ class _HomeState extends State<Home> {
             child: ListView.builder(
               itemCount: total,
               itemBuilder: (context, index) {
-                String nama_game =
+                String namaGame =
                     dataJson["data"][index]["attributes"]["nama_game"];
+                String harga = dataJson["data"][index]["attributes"]["harga"];
+                String id = dataJson["data"][index]["id"];
                 return ListTile(
                   onTap: () {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => rdr1(
-                                  nama_game: nama_game,
+                            builder: (context) => EditPage(
+                                  nama_game: namaGame,
+                                  harga: harga,
+                                  id: id,
                                 )));
                   },
-                  title: Text(nama_game),
+                  title: Text(namaGame),
                   subtitle: Row(
                     children: [
-                      Text(
+                      const Text(
                         "Harga: ",
                         style: TextStyle(color: Colors.grey),
                       ),
                       Text(
                         dataJson["data"][index]["attributes"]["harga"],
-                        style: TextStyle(color: Colors.green),
+                        style: const TextStyle(color: Colors.green),
                       ),
                     ],
                   ),
-                  leading: Icon(Icons.gamepad),
+                  leading: const Icon(Icons.gamepad),
                   trailing: IconButton(
                     onPressed: () async {
                       var id = dataJson["data"][index]["id"];
@@ -153,7 +156,7 @@ class _HomeState extends State<Home> {
                       );
                       _getDataFromStrapi();
                     },
-                    icon: Icon(Icons.delete),
+                    icon: const Icon(Icons.delete),
                   ),
                 );
               },
@@ -162,7 +165,10 @@ class _HomeState extends State<Home> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _getDataFromStrapi,
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => const CreatePage()));
+        },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),
