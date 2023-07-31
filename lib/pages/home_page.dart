@@ -16,7 +16,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final int _counter = 0;
+  int _counter = 0;
   int total = 0;
   var dataJson;
 
@@ -50,7 +50,7 @@ class _HomeState extends State<Home> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const cart()),
+                    MaterialPageRoute(builder: (context) => cart()),
                   );
                 },
               ))
@@ -119,35 +119,32 @@ class _HomeState extends State<Home> {
             child: ListView.builder(
               itemCount: total,
               itemBuilder: (context, index) {
-                String namaGame =
+                String nama_game =
                     dataJson["data"][index]["attributes"]["nama_game"];
                 String harga = dataJson["data"][index]["attributes"]["harga"];
-                String id = dataJson["data"][index]["id"];
+                int id = dataJson["data"][index]["id"];
                 return ListTile(
                   onTap: () {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => EditPage(
-                                  nama_game: namaGame,
-                                  harga: harga,
-                                  id: id,
-                                )));
+                                nama_game: nama_game, harga: harga, id: id)));
                   },
-                  title: Text(namaGame),
+                  title: Text(nama_game),
                   subtitle: Row(
                     children: [
-                      const Text(
+                      Text(
                         "Harga: ",
                         style: TextStyle(color: Colors.grey),
                       ),
                       Text(
                         dataJson["data"][index]["attributes"]["harga"],
-                        style: const TextStyle(color: Colors.green),
+                        style: TextStyle(color: Colors.green),
                       ),
                     ],
                   ),
-                  leading: const Icon(Icons.gamepad),
+                  leading: Icon(Icons.gamepad),
                   trailing: IconButton(
                     onPressed: () async {
                       var id = dataJson["data"][index]["id"];
@@ -156,7 +153,7 @@ class _HomeState extends State<Home> {
                       );
                       _getDataFromStrapi();
                     },
-                    icon: const Icon(Icons.delete),
+                    icon: Icon(Icons.delete),
                   ),
                 );
               },
@@ -167,7 +164,7 @@ class _HomeState extends State<Home> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => const CreatePage()));
+              context, MaterialPageRoute(builder: (context) => CreatePage()));
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
