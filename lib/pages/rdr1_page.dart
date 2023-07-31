@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class rdr1 extends StatefulWidget {
-  rdr1({super.key});
+  const rdr1({super.key});
 
   @override
   State<rdr1> createState() => _rdr1State();
@@ -44,7 +44,7 @@ class _rdr1State extends State<rdr1> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => cart()),
+                      MaterialPageRoute(builder: (context) => const cart()),
                     );
                   },
                 ))

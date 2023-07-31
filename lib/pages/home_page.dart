@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:uap/game_model.dart';
+import 'package:uap/network_manager.dart';
 import 'package:uap/pages/cart_page.dart';
 import 'package:uap/pages/library_page.dart';
 import 'package:uap/pages/login_page.dart';
@@ -16,6 +18,27 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  List<Game> games = [];
+
+  bool isLoading = false;
+
+  Future<void> refreshData() async {
+    setState(() {
+      isLoading = true;
+    });
+    final result = await NetworkManager().getAll();
+    games = result.data;
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    refreshData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +55,7 @@ class _HomeState extends State<Home> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => cart()),
+                    MaterialPageRoute(builder: (context) => const cart()),
                   );
                 },
               ))
@@ -123,63 +146,19 @@ class _HomeState extends State<Home> {
 
         //horizontal list view (menu game)
         Expanded(
-            child: ListView(
-          scrollDirection: Axis.horizontal,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 25.0, bottom: 25),
-              child: Container(
-                width: 200,
-                decoration: BoxDecoration(
-                    color: Colors.black54,
-                    borderRadius: BorderRadius.circular(12)),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const tekken7()));
-                  },
-                  child: Image.asset("lib/images/tekken7.png"),
+          child: ListView.builder(
+            itemCount: games.length,
+            physics: const ScrollPhysics(),
+            itemBuilder: (BuildContext context, int index) {
+              return Card(
+                child: ListTile(
+                  title: Text(games[index].attributes.namaGame),
+                  subtitle: Text(games[index].attributes.harga),
                 ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 25.0, bottom: 25),
-              child: Container(
-                width: 200,
-                decoration: BoxDecoration(
-                    color: Colors.black54,
-                    borderRadius: BorderRadius.circular(12)),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => rdr1()));
-                  },
-                  child: Image.asset("lib/images/rdr cv1.png"),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 25.0, bottom: 25),
-              child: Container(
-                width: 200,
-                decoration: BoxDecoration(
-                    color: Colors.black54,
-                    borderRadius: BorderRadius.circular(12)),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const yakuza0()));
-                  },
-                  child: Image.asset("lib/images/yakuza0.png"),
-                ),
-              ),
-            ),
-          ],
-        ))
+              );
+            },
+          ),
+        )
       ]),
     );
   }

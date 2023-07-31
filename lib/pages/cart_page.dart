@@ -1,10 +1,14 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class cart extends StatelessWidget {
-  cart({super.key});
+class cart extends StatefulWidget {
+  const cart({super.key});
+
+  @override
+  State<cart> createState() => _cartState();
+}
+
+class _cartState extends State<cart> {
   var dataJson;
 
   @override
